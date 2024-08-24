@@ -1,0 +1,5 @@
+password_gen/bin 
+password_gen/include 
+password_gen/lib 
+password_gen/lib64 
+password_gen/pyvenv.cfg

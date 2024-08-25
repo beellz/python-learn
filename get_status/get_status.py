@@ -12,7 +12,7 @@ def get_data_from_api(url, params=None):
         return None
 
 # Example usage:
-api_url = [ "https://jellyfin.beellz.com" , "https://kindle.beellz.com" , "https://torrent.beellz.com/transmission/web/", "https://google.com"]
+api_url = [ "https://jellyfin.beellz.com" , "https://kindle.beellz.com" , "https://google.com", "https://torrent.beellz.com"]
 
 
 for i in api_url:

@@ -4,5 +4,8 @@ password_gen/lib
 password_gen/lib64 
 password_gen/pyvenv.cfg
 
-api_calls/venv
+api_calls/venv/
 api_calls/.vscode
+
+
+image-downloader/venv/

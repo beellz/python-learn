@@ -25,10 +25,10 @@ file_ext = ["txt", "pdf" , "mp3" , "mp4" , "jpg", "png", "mv"]
 
 
 for i, ext in zip(range(1, 10), file_ext):
-    for ext in file_ext:
-        print(main_dir, 'myfile' + str(i) + '.' + ext)
-        with open(os.path.join(main_dir, 'myfile' + str(i) + '.' + ext), 'w') as fp:
-            pass
+     for ext in file_ext:
+         print(main_dir, 'myfile' + str(i) + '.' + ext)
+         with open(os.path.join(main_dir, 'myfile' + str(i) + '.' + ext), 'w') as fp:
+             pass
 
 
 # initally thought of this way to write each extenstion

@@ -24,7 +24,7 @@ with sync_playwright() as p:
     page = browser.new_page()
     page.goto("https://www.uhdpaper.com/search?q=anime+girl&by-date=true&i=0")
     print(page.title())
-    for i in range(1, 200):
+    for i in range(1, 20):
         load_all = page.get_by_text("Load More ").click()
         time.sleep(2)
         link_locators = page.locator('.blog-posts ').get_by_role('link').all()

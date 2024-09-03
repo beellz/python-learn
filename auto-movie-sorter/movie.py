@@ -1,22 +1,43 @@
 import requests
 from dotenv import load_dotenv
 import os
+import json
 load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
-movie_name = "lord%20of%20war"
-year = "2005"
 
-url = "https://api.themoviedb.org/3/search/movie?query=" + movie_name + "&language=en-US&page=1" + "&year=" + year
+params = {
+    # "movie_name":"lord of war",
+    "query":"lord of war",
+    "include_adult":"false",   
+    "language":"en-US",
+    "page":"1",
+    "year":"2005"
+    # "accept":"application/json",
+    # "Authorization":"Bearer" + API_KEY
+}
 
+url = "https://api.themoviedb.org/3/search/multi?"
 headers = {
     "accept": "application/json",
     "Authorization": "Bearer " + API_KEY
 }
 
-print(url)
+response = requests.get(url, params=params, headers=headers)
 
-response = requests.get(url, headers=headers)
+print(response.url)
+# print(response.text)
+# print("hello")
+# print(response.json())
+# print(response["title"])
+#  json_data = response.json()
 
 
-print(response.text)
+json_data = response.json()
+# data = json.load(name)
+# test = data.get("['results'][0]")
+
+print(json_data)
+
+
+

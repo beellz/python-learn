@@ -10,3 +10,6 @@ api_calls/.vscode
 
 image-downloader/venv/
 auto-file-mover/venv/
+
+auto-movie-sorter/.env/
+auto-movie-sorter/venv/

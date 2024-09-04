@@ -3,56 +3,54 @@ from dotenv import load_dotenv
 import os
 import json
 import shutil
+import re
 
 load_dotenv()
 
 API_KEY = os.getenv("API_KEY_OMDB")
-path = '/home/beellz/workspace/python/python-learn/auto-movie-sorter/'
-path_dir = "/home/beellz/workspace/python/python-learn/auto-movie-sorter/completed/"
+path_movie = '/media/hdd/Movies/'
+path_tv = '/media/hdd/TV-series/'
+path_dir = "/media/hdd/trans-movie/download/complete"
 
+pattern = r'^(.*?)\s*\('
 
-all_files = "/all_files/"
-
-folder_name = ["Movies", "Tv-series" ]
-
-def file_creation():
-    for i in folder_name:
-        try:
-            os.mkdir(path + all_files + i)
-            print(f"Folder creating {i}")
-        except FileExistsError:
-            pass
-
-
-name = os.listdir(path_dir)
-# loop each name from path 
 def sorter(name):
     for i in name:
-        params = {"t":i}
-        url = "http://www.omdbapi.com/?apikey=" + API_KEY
-        response = requests.get(url, params=params)
-        json_data = response.json()
         try:
-            type = json_data['Type']
-            year = json_data['Year']
-            print(f"{i} is a {type} released on {year}")
-            # get the each name and check if it movie or tv-series
-            # move it according to the type
-            if type == "movie":
-                print(f"{i} is a movie and moving the folder in a movie folder")
-                # dest = shutil.move(source, destination) 
-                shutil.move(path_dir + i , path + all_files + "/Movies/" + i)
-                # print(f"{path_dir}{i}")
-                # print(f"{path}{all_files}/Movies/")
-            elif type == "series":
-                print(f"{i} is a tv series and moving to tv series folder")
-                shutil.move(path_dir + i , path + all_files + "/Tv-series/" + i)
-            else:  
-                print("type unkonwn need to check in a different api") 
-        except:
-            pass
+            match = re.search(pattern, i)
+            if match:
+                result = match.group(1).strip()
+            print(result)
+            params = {"t": result}
+            url = "http://www.omdbapi.com/?apikey=" + API_KEY
+            response = requests.get(url, params=params)
+            json_data = response.json()
+            
+            try:
+                type = json_data['Type']
+                year = json_data['Year']
+                print(f"{result} is a {type} released on {year}")
+                
+                source_path = os.path.join(path_dir, i)
+                
+                if type == "movie":
+                    print(f"{result} is a movie and moving the folder to the movie folder")
+                    destination_path = os.path.join(path_movie, i)
+                    shutil.move(source_path, destination_path)
+                    print(f"Moved from {source_path} to {destination_path}")
+                elif type == "series":
+                    print(f"{result} is a TV series and moving to TV series folder")
+                    destination_path = os.path.join(path_tv, i)
+                    shutil.move(source_path, destination_path)
+                    print(f"Moved from {source_path} to {destination_path}")
+                else:
+                    print("Type unknown, need to check in a different API")
+            except KeyError:
+                print(f"Error: Unable to determine type for {result}")
+        except Exception as e:
+            print(f"Error processing {i}: {str(e)}")
 
-print(os.listdir(path_dir))
+name = os.listdir(path_dir)
+print("Files in source directory:", name)
 
-file_creation()
 sorter(name)

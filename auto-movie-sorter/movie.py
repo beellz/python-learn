@@ -6,9 +6,11 @@ load_dotenv()
 
 API_KEY = os.getenv("API_KEY_OMDB")
 
+name = input("please any movie or tv series name: ")
+
 params = {
     # "movie_name":"lord of war",
-    "t":"Dark",
+    "t":name
     # "y":"2005"
     # "accept":"application/json",
     # "Authorization":"Bearer" + API_KEY
@@ -28,5 +30,9 @@ print(response.text)
 
 json_data = response.json()
 
-type = json_data['Type']
-print(type)
+try:
+    type = json_data['Type']
+    year = json_data['Year']
+    print(f"{name} is a {type} released on {year}")
+except:
+    print("not movie or tv series")
